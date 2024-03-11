@@ -17,7 +17,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = await getAccessTokenSilently();
-      console.log(token);
       const apiOrigin = "http://localhost:3001";
       const response = await fetch(`${apiOrigin}/api/external`, {
         headers: {
@@ -32,7 +31,7 @@ const Home = () => {
   }, []);
 
   return (
-    (isAuthenticated && user) ? (
+    (isAuthenticated && user && user.email_verified) ? (
       <Fragment>       
         <div>
           <h2>User List</h2>

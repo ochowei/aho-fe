@@ -79,6 +79,19 @@ const NavBar = () => {
                   >
                     Log in
                   </Button>
+                  <Button
+                    id="qsSignUpBtn"
+                    color="secondary"
+                    className="btn-margin btn-margin-left-10"
+                    // goto signup page
+                    onClick={() => {
+                      window.location.href = '/signup';
+                      }
+                    }
+                    // onClick={() => loginWithRedirect()}
+                  >
+                    Sign up
+                  </Button>
                 </NavItem>
               )}
               {isAuthenticated && (
