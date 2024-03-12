@@ -17,21 +17,22 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = await getAccessTokenSilently();
-      const apiOrigin = "http://localhost:3001";
-      const response = await fetch(`${apiOrigin}/api/external`, {
+      const apiOrigin = "http://152.42.180.14:3002";
+      const response = await fetch(`${apiOrigin}/api/dashboard/v1/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
     
       const responseData = await response.json();
-      setState({ ...state, userList: responseData.userList});
+      console.log(responseData.data);
+      setState({ ...state, userList: responseData.data.rows});
     };
     fetchData();
   }, []);
 
   return (
-    (isAuthenticated && user && user.email_verified) ? (
+    (isAuthenticated && user ) ? (
       <Fragment>       
         <div>
           <h2>User List</h2>
@@ -47,9 +48,9 @@ const Home = () => {
             <tbody>
               {state.userList.map((user, index) => (
                 <tr key={index}>
-                  <td>{user.name}</td>
-                  <td>{user.signUp}</td>
-                  <td>{user.loginCount}</td>
+                  <td>{user.nickname || user.email }</td>
+                  <td>{user.createdAt}</td>
+                  <td>{user.loginsCount}</td>
                   <td>{user.lastSession}</td>
                 </tr>
               ))}
