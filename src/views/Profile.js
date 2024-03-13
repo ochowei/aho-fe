@@ -60,22 +60,28 @@ export const ProfileComponent = () => {
           <h2>{user.name}</h2>
           <p className="lead text-muted">{user.email}</p>
         </Col>
+        {
+        user.sub.startsWith('auth0|') && 
+        <Col>
+        <div> 
+        <Button color="primary" className="mt-5" onClick={reset}>
+          Send reset password email
+        </Button>
+        <Button color="secondary" className="mt-5" onClick={sendVerificationEmail}>
+          Send verification email
+        </Button>
+        </div>
+       
+        </Col>
+      
+      }
+   
       </Row>
       <Row>
         <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
       </Row>
-      <Row>
-        <Col>
-        <Button color="primary" className="mt-5" onClick={reset}>
-          Send reset password email
-        </Button>
-        </Col>
-        <Col>
-        <Button color="primary" className="mt-5" onClick={sendVerificationEmail}>
-          Send verification email
-        </Button>
-        </Col>
-        </Row>
+      
+      
     </Container>
   );
 };

@@ -75,9 +75,12 @@ const NavBar = () => {
                     id="qsLoginBtn"
                     color="primary"
                     className="btn-margin"
-                    onClick={() => loginWithRedirect({authorizationParams: {
-                      redirect_uri: 'http://localhost:3000/afterauth'
-                    }})}
+                    onClick={() => loginWithRedirect({
+                      authorizationParams: {
+                        // redirect_uri: 'http://localhost:3000/afterauth',
+                        // screen_hint: 'signup'
+                      },
+                     })}
                   >
                     Log in
                   </Button>
@@ -86,10 +89,16 @@ const NavBar = () => {
                     color="secondary"
                     className="btn-margin btn-margin-left-10"
                     // goto signup page
-                    onClick={() => {
-                      window.location.href = '/signup';
-                      }
-                    }
+                    // onClick={() => {
+                    //   window.location.href = '/signup';
+                    //   }
+                    // }
+                    onClick={() => loginWithRedirect({
+                      authorizationParams: {
+                        // redirect_uri: 'http://localhost:3000/afterauth',
+                        screen_hint: 'signup'
+                      },
+                     })}
                     // onClick={() => loginWithRedirect()}
                   >
                     Sign up

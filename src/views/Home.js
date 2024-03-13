@@ -11,30 +11,59 @@ const Home = () => {
   const userList = [
    
   ];
-  const [state, setState] = useState({userList
+  const [state, setState] = useState({userList, userTotal: -1, summary: {}
   });
- 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await getAccessTokenSilently();
-      const apiOrigin = "http://152.42.180.14:3002";
-      const response = await fetch(`${apiOrigin}/api/dashboard/v1/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    
-      const responseData = await response.json();
-      console.log(responseData.data);
-      setState({ ...state, userList: responseData.data.rows});
-    };
+  const fetchData = async () => {
+    const token = await getAccessTokenSilently();
+    const apiOrigin = "http://152.42.180.14:3002";
+    let response = await fetch(`${apiOrigin}/api/dashboard/v1/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  
+    let responseData = await response.json();
+
+    const summaryResponse = await fetch(`${apiOrigin}/api/dashboard/v1/summary`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  
+    const summaryResponseData = await summaryResponse.json();
+    setState({ ...state, summary: summaryResponseData.data, userList: responseData.data.rows, userTotal: responseData.data.count});
+
+  };
+  useEffect(() => {    
     fetchData();
+    const interval = setInterval(() => {
+      fetchData();
+    }, 10000);
+    return () => clearInterval(interval);
   }, []);
 
+
   return (
-    (isAuthenticated && user ) ? (
+    (isAuthenticated && user && (state.userTotal >= 0) ) ? (
       <Fragment>       
         <div>
+          <h2>Summary</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Total Users</th>
+                <th>Today's Session</th>
+                <th>Last 7 Days Average</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{state.userTotal}</td>
+                <td>{state.summary.userSessionCount.todayTotal}</td>
+                <td>{state.summary.userSessionCount.last7DaysAverage}</td>
+              </tr>
+            </tbody>
+          </table>
           <h2>User List</h2>
           <table class="table">
             <thead>
