@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
 export const ProfileComponent = () => {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const config = getConfig();
   const reset = () => { 
     fetch(`https://${config.domain}/dbconnections/change_password`, {
@@ -28,23 +28,26 @@ export const ProfileComponent = () => {
 });
   }
 
-  const sendVerificationEmail = () => {
-    fetch(`http://152.42.180.14:3002/api/user/v1/verification/email`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.secToken}`,
-      },
-      body: JSON.stringify({
-        email: user.email,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+const sendVerificationEmail = async () => {
+
+  const token = await getAccessTokenSilently();
+  fetch(`http://152.42.180.14:3002/api/user/v1/verification/email`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      email: user.email,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
+
 
   return (
     <Container className="mb-5">
