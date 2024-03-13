@@ -11,6 +11,7 @@ import ExternalApi from "./views/ExternalApi";
 import SignUp from "./views/SignUp";
 import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
+import AfterSignup from "./views/AfterAuth";
 
 // styles
 import "./App.css";
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/profile" component={Profile} />
             <Route path="/external-api" component={ExternalApi} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/afterauth" component={AfterSignup} />
           </Switch>
         </Container>
         <Footer />
