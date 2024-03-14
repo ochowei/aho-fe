@@ -31,7 +31,7 @@ export const ProfileComponent = () => {
 const sendVerificationEmail = async () => {
 
   const token = await getAccessTokenSilently();
-  fetch(`https://152.42.180.14/api/user/v1/verification/email`, {
+  fetch(`https://152.42.180.14:40443/api/user/v1/verification/email`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

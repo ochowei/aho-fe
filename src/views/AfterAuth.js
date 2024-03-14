@@ -16,7 +16,7 @@ export const ProfileComponent =  () => {
 
   const token = await getAccessTokenSilently();
     
-  fetch(`https://152.42.180.14/api/user/v1/afterauth`, {
+  fetch(`https://152.42.180.14:40443/api/user/v1/afterauth`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
