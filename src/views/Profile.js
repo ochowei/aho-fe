@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, PopoverHeader, PopoverBody, UncontrolledPopover } from "reactstrap";
 
 import {getConfig} from "../config";
 import Highlight from "../components/Highlight";
@@ -31,7 +31,7 @@ export const ProfileComponent = () => {
 const sendVerificationEmail = async () => {
 
   const token = await getAccessTokenSilently();
-  fetch(`http://152.42.180.14:3002/api/user/v1/verification/email`, {
+  fetch(`https://152.42.180.14/api/user/v1/verification/email`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -67,12 +67,37 @@ const sendVerificationEmail = async () => {
         user.sub.startsWith('auth0|') && 
         <Col>
         <div> 
-        <Button color="primary" className="mt-5" onClick={reset}>
+        <Button id="PopoverResetPassword" color="primary" className="mt-5" onClick={reset}>
           Send reset password email
         </Button>
-        <Button color="secondary" className="mt-5" onClick={sendVerificationEmail}>
+        <Button id="PopoverVerifyEmail" color="secondary" className="mt-5" onClick={sendVerificationEmail}>
           Send verification email
         </Button>
+        <UncontrolledPopover
+        placement="bottom"
+        target="PopoverResetPassword"
+        trigger="focus"
+      >
+        <PopoverHeader>
+          Attention
+        </PopoverHeader>
+        <PopoverBody>
+          An email has been sent to your email address to reset your password
+        </PopoverBody>
+      </UncontrolledPopover>
+      <UncontrolledPopover
+        placement="bottom"
+        target="PopoverVerifyEmail"
+        trigger="focus"
+      >
+        <PopoverHeader>
+          Attention
+        </PopoverHeader>
+        <PopoverBody>
+          An email has been sent to your email address to verify your email
+        </PopoverBody>
+      </UncontrolledPopover>
+
         </div>
        
         </Col>

@@ -15,7 +15,7 @@ const Home = () => {
   });
   const fetchData = async () => {
     const token = await getAccessTokenSilently();
-    const apiOrigin = "http://152.42.180.14:3002";
+    const apiOrigin = "https://152.42.180.14";
     //get page from url anchor of variable named page and default to 1
     const page = window.location.hash.split('=')[1] || 1;
     

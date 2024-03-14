@@ -10,7 +10,7 @@ const handleSignup = async (event) => {
     const email = event.target.email.value;
     const password = event.target.password.value;
     const user = { email, password };
-    const response = await fetch("http://152.42.180.14:3002/api/auth0db/v1/create", {
+    const response = await fetch("https://152.42.180.14/api/auth0db/v1/create", {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
