@@ -77,7 +77,7 @@ const NavBar = () => {
                     className="btn-margin"
                     onClick={() => loginWithRedirect({
                       authorizationParams: {
-                        redirect_uri: '/afterauth',
+                        redirect_uri: 'https://152.42.180.14/afterauth',
                         // screen_hint: 'signup'
                       },
                      })}
@@ -97,7 +97,7 @@ const NavBar = () => {
                       authorizationParams: {
                         // redirect_uri: 'http://localhost:3000/afterauth',
                         screen_hint: 'signup',
-                        redirect_uri: '/afterauth'
+                        redirect_uri: 'https://152.42.180.14/afterauth'
                       },
                      })}
                     // onClick={() => loginWithRedirect()}
