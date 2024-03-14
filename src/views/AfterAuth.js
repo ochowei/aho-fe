@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Container, Row, Col, Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 import {getConfig} from "../config";
 import Highlight from "../components/Highlight";
@@ -9,9 +10,9 @@ import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 export const ProfileComponent =  () => {
   const { user, getAccessTokenSilently } = useAuth0();
   const config = getConfig();
+  const history = useHistory();
 
-
-  const updateProfile = async () => {
+  const updateProfile = async (callback) => {
 
   const token = await getAccessTokenSilently();
     
@@ -27,25 +28,28 @@ export const ProfileComponent =  () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      history.push('/');
 
     })
     .catch((error) => {
       console.error('Error:', error);
     }).finally(() => {
-      window.location.href = "/";
-
+      
+      history.push('/');
     } );
   }
+  useEffect(() => {
+    if (user.sub.startsWith('google-oauth2|')) {
+       updateProfile();
 
-  if (user.sub.startsWith('google-oauth2|')) {
-     updateProfile();
+    }else{
+      history.push('/');
+    }
+    //redirect to the home page
+  });
 
-  }else{
-    window.location.href = "/";
-  }
   //redirect to the home page
-
+  
 
   return (
     <Container className="mb-5">
